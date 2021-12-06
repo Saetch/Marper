@@ -1,0 +1,7 @@
+﻿[*.cs]
+
+# IDE0051: Nicht verwendete private Member entfernen
+dotnet_diagnostic.IDE0051.severity = suggestion
+
+# Default severity for analyzer diagnostics with category 'CodeQuality'
+dotnet_analyzer_diagnostic.category-CodeQuality.severity = suggestion
