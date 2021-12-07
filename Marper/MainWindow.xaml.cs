@@ -100,7 +100,10 @@ namespace Marper
 
         private void randomColorButton_Click(object sender, RoutedEventArgs e)
         {
-
+            for(int i = 0; i < backgroundGrid.Children.Count; ++i)
+            {
+                Console.WriteLine(backgroundGrid.Children[i]);
+            }
             Random rnd = new Random();
             Color cl = new Color()
             {
