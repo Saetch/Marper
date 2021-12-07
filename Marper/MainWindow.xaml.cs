@@ -78,25 +78,7 @@ namespace Marper
             }
         }
 
-        private void exitButton_Click(object sender, RoutedEventArgs e)
-        {
-            this.Close();
-        }
 
-        private void joinGameButton_Click(object sender, RoutedEventArgs e)
-        {
-
-        }
-
-        private void Button_Click_1(object sender, RoutedEventArgs e)
-        {
-
-        }
-
-        private void Button_Click(object sender, RoutedEventArgs e)
-        {
-
-        }
 
         private void randomColorButton_Click(object sender, RoutedEventArgs e)
         {
@@ -121,6 +103,26 @@ namespace Marper
                 gridColor1.Color = cl;
 
             }
+        }
+
+        private void ExitButton_Click(object sender, RoutedEventArgs e)
+        {
+            this.Close();
+        }
+
+        private void JoinGameButton_Click(object sender, RoutedEventArgs e)
+        {
+            throw new NotImplementedException();
+        }
+
+        private void HostButton_Click(object sender, RoutedEventArgs e)
+        {
+            throw new NotImplementedException();    
+        }
+
+        private void SinglePlayerButton_Click(object sender, RoutedEventArgs e)
+        {
+            throw new NotImplementedException();
         }
     }
 
