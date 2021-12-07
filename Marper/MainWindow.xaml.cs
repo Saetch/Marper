@@ -32,6 +32,7 @@ namespace Marper
         public MainWindow()
         {
             InitializeComponent();
+            
             if(this.Content is System.Windows.Controls.Grid)
             {
                 ConsoleAllocator.ShowConsoleWindow();
@@ -156,7 +157,6 @@ namespace Marper
 
         private void SinglePlayerButton_Click(object sender, RoutedEventArgs e)
         {
-            updaterThread.Abort();
 
             Game.Singleplayer(this);
         }
