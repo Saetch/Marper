@@ -30,6 +30,26 @@ namespace Marper
             {
                 ConsoleAllocator.ShowConsoleWindow();
                 Console.WriteLine("Setting up main Window!");
+
+                Random rnd = new Random();
+                Color cl = new Color()
+                {
+                    A = 0xFF,
+                    G = (byte)(rnd.Next() % 256),
+                    B = (byte)(rnd.Next() % 256),
+                    R = (byte)(rnd.Next() % 256)
+                };
+
+                gridColor0.Color = cl;
+
+                cl = new Color()
+                {
+                    A = 0xFF,
+                    G = (byte)(rnd.Next() % 256),
+                    B = (byte)(rnd.Next() % 256),
+                    R = (byte)(rnd.Next() % 256)
+                };
+                gridColor1.Color = cl;
             }
 
         }
@@ -76,6 +96,28 @@ namespace Marper
         private void Button_Click(object sender, RoutedEventArgs e)
         {
 
+        }
+
+        private void randomColorButton_Click(object sender, RoutedEventArgs e)
+        {
+
+            Random rnd = new Random();
+            Color cl = new Color()
+            {
+                A = 0xFF,
+                G = (byte)(rnd.Next() % 256),
+                B = (byte)(rnd.Next() % 256),
+                R = (byte)(rnd.Next() % 256)
+            };
+            if(rnd.Next() % 2 == 0)
+            {
+                gridColor0.Color = cl;
+            }
+            else
+            {
+                gridColor1.Color = cl;
+
+            }
         }
     }
 
