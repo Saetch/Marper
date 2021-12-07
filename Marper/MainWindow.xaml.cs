@@ -13,16 +13,22 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
-
+using Marper.Cntrl;
+using System.Threading;
 namespace Marper
 {
 
+    
 
     /// <summary>
     /// Interaktionslogik für MainWindow.xaml
     /// </summary>
     public partial class MainWindow : Window
     {
+        public int State { get; set; } = 0;
+        internal Controller Cntrl { get; set; } = null;
+
+        protected Thread updaterThread;
         public MainWindow()
         {
             InitializeComponent();
@@ -51,7 +57,21 @@ namespace Marper
                 };
                 gridColor1.Color = cl;
             }
+            SwitchBackgroundRandomFiveSeconds();
 
+
+        }
+
+        private void SwitchBackgroundRandomFiveSeconds()
+        {
+            updaterThread = new Thread(Loopdiloop);
+            updaterThread.Start();
+        }
+
+        internal void StartGameWithController(Controller c)
+        {
+            this.Cntrl = c;
+            this.State = 1;
         }
 
         override protected void OnContentRendered(EventArgs e)
@@ -59,22 +79,23 @@ namespace Marper
 
         }
 
-
+        protected override void OnClosed(EventArgs e)
+        {
+            this.updaterThread.Abort();
+            this.updaterThread.Join();
+            base.OnClosed(e);
+        }
 
         private void Loopdiloop()
         {
             Random rnd = new Random();
-            String str;
             while (true)
             {
-                str = "";
-                System.Threading.Thread.Sleep(1000);
-                for (int i = 0; i <= rnd.Next() % 12; ++i)
-                {
-                    str += rnd.Next() % 30 + 67;
-                }
+                System.Threading.Thread.Sleep(5000);
 
-               // lstNames.Items.Add(str);
+                randomColorButton_Click(new Object(), new RoutedEventArgs());
+
+
             }
         }
 
@@ -82,9 +103,17 @@ namespace Marper
 
         private void randomColorButton_Click(object sender, RoutedEventArgs e)
         {
-            for(int i = 0; i < backgroundGrid.Children.Count; ++i)
+            int count = 0;
+            this.Dispatcher.Invoke(() => {
+               count = backgroundGrid.Children.Count;
+            });
+
+            for (int i = 0; i < count; ++i)
             {
-                Console.WriteLine(backgroundGrid.Children[i]);
+                this.Dispatcher.Invoke(() => {
+                    Console.WriteLine(backgroundGrid.Children[i]);
+                });
+                
             }
             Random rnd = new Random();
             Color cl = new Color()
@@ -96,18 +125,23 @@ namespace Marper
             };
             if(rnd.Next() % 2 == 0)
             {
-                gridColor0.Color = cl;
+                this.Dispatcher.Invoke(() => {
+                    gridColor0.Color = cl;
+                });
+                
             }
             else
             {
-                gridColor1.Color = cl;
+                this.Dispatcher.Invoke(() => {
+                    gridColor1.Color = cl;
+                });
 
             }
         }
 
         private void ExitButton_Click(object sender, RoutedEventArgs e)
         {
-            this.Close();
+            Close();
         }
 
         private void JoinGameButton_Click(object sender, RoutedEventArgs e)
@@ -122,7 +156,9 @@ namespace Marper
 
         private void SinglePlayerButton_Click(object sender, RoutedEventArgs e)
         {
-            throw new NotImplementedException();
+            updaterThread.Abort();
+
+            Game.Singleplayer(this);
         }
 
     }
